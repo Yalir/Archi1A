@@ -1,0 +1,11 @@
+Bits de configuration du PIC18F6680
+
+Dans l’EDI MPLAB : Menu Help > Topics > PIC18Config Settings > PIC18F6xxx.... > PIC18F6680
+Pour configurer ces bits (exemple) :
+#include <p18F4550.h>
+#pragma config FOSC = INTOSC_EC
+#pragma config PWRT = OFF
+#pragma config BOR = OFF
+etc
+
++ d’infos ici : http://www.fcet.staffs.ac.uk/sow1/pic_c18.htm
