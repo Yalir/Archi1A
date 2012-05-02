@@ -10,6 +10,8 @@ void init_interruption()
 						/*Interruption du port B*/
 	INTCONbits.RBIE=1;
 	INTCON2bits.RBIP=0;
+	PORTD=0;
+	TRISD=0;
 }
 
 
