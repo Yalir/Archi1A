@@ -13,4 +13,7 @@ int bouton_RB4_on(void);
  */
 int bouton_RB5_on(void);
 
+int bouton_RB4_pressed(void);
+int bouton_RB5_pressed(void);
+
 #endif

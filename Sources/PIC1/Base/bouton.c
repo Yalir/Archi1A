@@ -25,6 +25,42 @@ int bouton_RB4_on(void)
 	return !(PORTBbits.RB4);
 }
 
+int bouton_RB4_pressed(void)
+{
+	static int prevState = 0;
+	int res = 0;
+	
+	if (bouton_RB4_on() && prevState == 0)
+	{
+		res = 1;
+		prevState = 1;
+	}
+	else if (!bouton_RB4_on() && prevState == 1)
+	{
+		prevState = 0;
+	}
+	
+	return res;
+}
+
+int bouton_RB5_pressed(void)
+{
+	static int prevState = 0;
+	int res = 0;
+	
+	if (bouton_RB5_on() && prevState == 0)
+	{
+		res = 1;
+		prevState = 1;
+	}
+	else if (!bouton_RB5_on() && prevState == 1)
+	{
+		prevState = 0;
+	}
+	
+	return res;
+}
+
 /* 	Fonction bouton_RB5_on
 	Renvoie 1 si le bouton RB5 est actionné
 	Renvoie 0 sinon

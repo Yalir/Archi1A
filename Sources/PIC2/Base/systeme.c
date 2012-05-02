@@ -1,4 +1,5 @@
 #include "systeme.h"
+#include "../RS232/rs232.h"
 
 /* Fonction d'initialisation des paramètres pour les interruptions*/
 void init_interruption()
@@ -10,6 +11,8 @@ void init_interruption()
 						/*Interruption du port B*/
 	INTCONbits.RBIE=1;
 	INTCON2bits.RBIP=0;
+	PORTD=0;
+	TRISD=0;
 }
 
 
@@ -17,5 +20,5 @@ void init_interruption()
 void init(void)
 {
 	init_interruption();
-	PORTD=0;	
+	rs232_init();	
 }
