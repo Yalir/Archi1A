@@ -37,6 +37,7 @@ file_009=.
 file_010=.
 file_011=.
 file_012=.
+file_013=.
 [GENERATED_FILES]
 file_000=no
 file_001=no
@@ -51,6 +52,7 @@ file_009=no
 file_010=no
 file_011=no
 file_012=no
+file_013=no
 [OTHER_FILES]
 file_000=no
 file_001=no
@@ -64,7 +66,8 @@ file_008=no
 file_009=no
 file_010=no
 file_011=no
-file_012=yes
+file_012=no
+file_013=yes
 [FILE_INFO]
 file_000=Base\bouton.c
 file_001=Base\led.c
@@ -78,7 +81,8 @@ file_008=Base\main.h
 file_009=Base\systeme.h
 file_010=CAN\ECAN.h
 file_011=RS232\rs232.h
-file_012=CAN\ECAN.def
+file_012=Base\config.h
+file_013=CAN\ECAN.def
 [SUITE_INFO]
 suite_guid={5B7D72DD-9861-47BD-9F60-2BE967BF8416}
 suite_state=
