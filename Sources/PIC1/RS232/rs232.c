@@ -92,9 +92,16 @@ void rs232_read_line(char buffer[64])
 			if (delete == 1)
 				delete = 0;
 		}
-	} while (c != '\r' && index < 64);
+	} while (c != '\r' && index < 63);
 	
 	// Eviter de réécrire par dessus le texte saisi
+	
+	if (index == 63)
+	{
+		while (BusyUSART());
+		WriteUSART('\r');
+	}
+		
 	while (BusyUSART());
 	WriteUSART('\n');
 	
