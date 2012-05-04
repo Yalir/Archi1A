@@ -52,7 +52,8 @@ void rs232_clean(void)
 
 void rs232_read_line(char buffer[64])
 {
-	unsigned int index = 0;
+	int index = 0;
+	int delete = 0;
 	char c;
 	
 	// Initialiser le tampon
@@ -66,12 +67,31 @@ void rs232_read_line(char buffer[64])
 		// Lire un caractère
 		while (!DataRdyUSART());
 		c = ReadUSART();
-		buffer[index] = c;
-		index++;
 		
-		// Afficher les caractères entrés
-		while (BusyUSART());
-		WriteUSART(c);
+		if (c != 127)
+		{
+			buffer[index] = c;
+			index++;
+		}
+		else
+		{
+			if (index > 0)
+			{
+				index--;
+				buffer[index] = '\0';
+				delete = 1;
+			}
+		}	
+		
+		if (c != 127 || (c == 127 && delete == 1))
+		{
+			// Afficher les caractères entrés
+			while (BusyUSART());
+			WriteUSART(c);
+			
+			if (delete == 1)
+				delete = 0;
+		}
 	} while (c != '\r' && index < 64);
 	
 	// Eviter de réécrire par dessus le texte saisi
