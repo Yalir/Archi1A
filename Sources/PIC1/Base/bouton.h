@@ -1,6 +1,5 @@
 #ifndef BOUTON_H_INCLUDED
 #define BOUTON_H_INCLUDED
-
 /** @brief Indique si le bouton RB4 (1e bouton après le reset du PIC#1) est enfoncé
  *
  * @return 1 si le bouton RB4 est enfoncé, 0 sinon

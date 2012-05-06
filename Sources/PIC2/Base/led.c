@@ -1,7 +1,7 @@
 
 #include "led.h"
 
-#include <p18f6680.h>
+#include <p18f8680.h>
 #define TEMPORISATION 20000
 
 static int led_check_initialized = 0;
@@ -127,7 +127,6 @@ void led_sequence2(void)
 void led_afficher_int(unsigned char valeur)
 {
 	led_check_init();
-	
 	PORTDbits.RD0 = ((valeur & (1 /*<< 0*/)) != 0) ? 1 : 0;
 	PORTDbits.RD1 = ((valeur & (1 << 1)) != 0) ? 1 : 0;
 	PORTDbits.RD2 = ((valeur & (1 << 2)) != 0) ? 1 : 0;
