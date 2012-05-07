@@ -1,5 +1,7 @@
+
 #ifndef BOUTON_H_INCLUDED
 #define BOUTON_H_INCLUDED
+
 /** @brief Indique si le bouton RB4 (1e bouton après le reset du PIC#1) est enfoncé
  *
  * @return 1 si le bouton RB4 est enfoncé, 0 sinon
@@ -12,6 +14,12 @@ int bouton_RB4_on(void);
  */
 int bouton_RB5_on(void);
 
+/** @brief Indique si le bouton a été enfoncé alors qu'il était relaché.
+ * Cette fonction renvoie FALSE si le bouton n'a pas été relaché depuis le
+ * dernier appel à cette fonction.
+ *
+ * @return 0 si le bouton n'a pas été enfoncé, !0 sinon
+ */
 int bouton_RB4_pressed(void);
 int bouton_RB5_pressed(void);
 

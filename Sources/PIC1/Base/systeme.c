@@ -1,5 +1,10 @@
+
 #include "systeme.h"
-#include "../RS232/rs232.h"
+#include "config.h"
+#include "rs232.h"
+#include "can.h"
+#include "led.h"
+#include "commands.h"
 
 /* Fonction d'initialisation des paramètres pour les interruptions*/
 void init_interruption()
@@ -20,5 +25,8 @@ void init_interruption()
 void init(void)
 {
 	init_interruption();
-	rs232_init();	
+	rs232_init();
+	can_init();
+	commands_init();
+	led_init();
 }

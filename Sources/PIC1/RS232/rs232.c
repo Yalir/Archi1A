@@ -1,7 +1,7 @@
 
 #include "rs232.h"
-#include "../BASE/led.h"
-#include <p18f6680.h>
+#include "config.h"
+#include "led.h"
 #include <usart.h>
 
 

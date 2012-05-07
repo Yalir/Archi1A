@@ -1,5 +1,6 @@
+
 #include "bouton.h"
-#include <p18f6680.h>
+#include "config.h"
 
 static int bouton_initialized = 0;
 static void bouton_check_init(void);

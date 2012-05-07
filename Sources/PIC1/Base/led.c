@@ -1,7 +1,7 @@
 
 #include "led.h"
+#include "config.h"
 
-#include <p18f6680.h>
 #define TEMPORISATION 20000
 
 static int led_check_initialized = 0;
@@ -19,6 +19,12 @@ static void led_check_init(void)
 		led_check_initialized = 1;
 	}
 }
+
+void led_init(void)
+{
+	led_check_init();
+}	
+
 
 /* Fonction qui permet d'allumer une led
 

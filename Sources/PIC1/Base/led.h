@@ -1,6 +1,10 @@
 #ifndef LED_H_INCLUDED
 #define LED_H_INCLUDED
 
+
+void led_init(void);
+
+
 /** @brief Allume la LED demandée
  *
  * Les indices de LED acceptés sont compris entre 0 et 7 inclus
