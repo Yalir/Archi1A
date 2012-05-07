@@ -12,6 +12,38 @@
 #pragma config WDT = OFF,DEBUG=OFF
 
 void clear();
+void handler(void)
+{
+		/*On masque les autres interruptions*/
+		
+		unsigned long id;
+    	BYTE data[4];
+    	BYTE dataLen=4;
+    	ECAN_RX_MSG_FLAGS flags;
+		INTCONbits.GIE=0;
+    	if(INTCONbits.RBIF==1)
+		{
+			if(PORTBbits.RB4==0)
+				printf("Appui du bouton RB4 du PIC 1"NL);
+			
+			if(bouton_RB5_pressed())
+				printf("Appui du bouton RB5 du PIC 1"NL);
+			
+			INTCONbits.RBIF=0;	
+		}
+		printf(NL">");
+		INTCONbits.GIE=1;
+}	
+
+
+#pragma code InterruptVectorHigh = 0x08        //placer le code suivant à l'adresse 0x18
+void InterruptVectorHigh (void)
+{
+    _asm
+        goto handler //jump to interrupt routine
+    _endasm
+
+}
 
 #pragma romdata
 
@@ -121,7 +153,6 @@ void main()
 	while(run)
 	{
 		int j;
-		
 		printf("> ");
 		rs232_read_line(buffer);
 		

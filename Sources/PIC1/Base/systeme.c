@@ -5,12 +5,12 @@
 void init_interruption()
 {
 						/*Interruption générale*/
-	//RCONbits.IPEN=0;
-	//INTCONbits.GIE=1;
-	//INTCONbits.PEIE=1;
+	RCONbits.IPEN=0;
+	INTCONbits.GIE=1;
+	INTCONbits.PEIE=0;
 						/*Interruption du port B*/
-	//INTCONbits.RBIE=0;
-	//INTCON2bits.RBIP=0;
+	INTCONbits.RBIE=1;
+	INTCON2bits.RBIP=0;
 	PORTD=0;
 	TRISD=0;
 }
