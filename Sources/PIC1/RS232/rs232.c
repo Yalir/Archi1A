@@ -15,6 +15,7 @@
 #define BIT7 (1 << 7)
 
 static int rs232_initialized = 0;
+static BOOL has_interruption = FALSE;
 
 void rs232_init(void)
 {
@@ -37,6 +38,7 @@ void rs232_init(void)
 		RCSTA = BIT4 | BIT7;
 		BAUDCON = BIT3;
 		
+		has_interruption = FALSE;
 		rs232_initialized = 1;
 	}
 }
@@ -50,61 +52,89 @@ void rs232_clean(void)
 	}
 }	
 
-void rs232_read_line(char buffer[64])
+BOOL rs232_read_line(char buffer[64])
 {
 	int index = 0;
 	int delete = 0;
 	char c;
+	BOOL got_interrupted = FALSE;
 	
 	// Initialiser le tampon
 	for (index = 0; index < 64;index++)
 		buffer[index] = '\0';
 	
 	index = 0;
+	has_interruption = FALSE;
 	
 	// Lire le texte
 	do {
 		// Lire un caractère
-		while (!DataRdyUSART());
-		c = ReadUSART();
+		while (!DataRdyUSART() && has_interruption == FALSE);
 		
-		if (c != 127)
+		if (has_interruption == FALSE)
 		{
-			buffer[index] = c;
-			index++;
-		}
-		else
-		{
-			if (index > 0)
-			{
-				index--;
-				buffer[index] = '\0';
-				delete = 1;
-			}
-		}	
-		
-		if (c != 127 || (c == 127 && delete == 1))
-		{
-			// Afficher les caractères entrés
-			while (BusyUSART());
-			WriteUSART(c);
+			c = ReadUSART();
 			
-			if (delete == 1)
-				delete = 0;
+			if (c != 127)
+			{
+				buffer[index] = c;
+				index++;
+			}
+			else
+			{
+				if (index > 0)
+				{
+					index--;
+					buffer[index] = '\0';
+					delete = 1;
+				}
+			}	
+			
+			if (c != 127 || (c == 127 && delete == 1))
+			{
+				// Afficher les caractères entrés
+				while (BusyUSART());
+				WriteUSART(c);
+				
+				if (delete == 1)
+					delete = 0;
+			}
 		}
-	} while (c != '\r' && index < 63);
+	} while (c != '\r' && index < 63 && has_interruption == FALSE);
 	
 	// Eviter de réécrire par dessus le texte saisi
 	
-	if (index == 63)
+	if (has_interruption)
 	{
-		while (BusyUSART());
-		WriteUSART('\r');
+		got_interrupted = TRUE;
 	}
+	else
+	{
+		if (index == 63)
+		{
+			while (BusyUSART());
+			WriteUSART('\r');
+		}
+			
+		while (BusyUSART());
+		WriteUSART('\n');
 		
-	while (BusyUSART());
-	WriteUSART('\n');
+		// Remove '\r'
+		buffer[index-1] = '\0';
+	}
 	
-	// Remove '\r'
-	buffer[index-1] = '\0';
+	return got_interrupted;
+}	
+
+void rs232_clear_characters(int length)
+{
+	int i;
+	
+	for (i = 0; i < length;i++)
+		printf("%c", 127);
+}	
+
+void rs232_interrupt_reading(void)
+{
+	has_interruption = TRUE;
 }	

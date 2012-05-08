@@ -3,6 +3,7 @@
 #define CONFIG_H
 
 #include <p18cxxx.h>
+#include <GenericTypeDefs.h>
 
 #if defined(__18F6680)
 	#define PIC_ID 1

@@ -3,6 +3,7 @@
 #include "systeme.h"
 #include "rs232.h"
 #include "commands.h"
+#include "interruption.h"
 #include <string.h>
 
 #pragma config PWRT = OFF
@@ -18,6 +19,9 @@ void main()
 {
     char buffer[64];
     int run;
+    int writtenLen;
+    int i;
+    BOOL interrupted;
 	
 	run = 1;
 	init();
@@ -29,34 +33,60 @@ void main()
 	while(run)
 	{
 		printf("> ");
-		rs232_read_line(buffer);
+		interrupted = rs232_read_line(buffer);
+		writtenLen = strlen(buffer);
 		
-		if (strcmppgm2ram(buffer, "help") == 0)
+		if (interrupted == TRUE)
 		{
-			command_help();
-		}
-		else if (strcmppgm2ram(buffer, "reset") == 0)
-		{
-			run = 0;
-		}
-		else if (strcmppgm2ram(buffer, "avancer") == 0)
-		{
-			command_avancer();
-		}
-		else if (strcmppgm2ram(buffer, "reculer") == 0)
-		{
-			command_reculer();
-		}
-		else if (strcmppgm2ram(buffer, "") == 0)
-		{
-		}
-		else if(strcmppgm2ram(buffer, "clear") == 0)
-		{
-			command_clear();
+			Interruption type;
+			BYTE value;
+			
+			rs232_clear_characters(writtenLen + 2);
+			interruption_get_data(&type, &value);
+			
+			switch (type)
+			{
+				case Int_RB4ButtonPressed:
+					printf("Notification : le bouton RB4 a été enfoncé" NL);
+					break;
+					
+				case Int_RB5ButtonPressed:
+					printf("Notification : le bouton RB5 a été enfoncé" NL);
+					break;
+					
+				default:
+					printf("Notification : interruption inconnue" NL);
+			}	
 		}
 		else
 		{
-			printf("%s: commande non reconnue" NL, buffer);
-		}	
+			if (strcmppgm2ram(buffer, "help") == 0)
+			{
+				command_help();
+			}
+			else if (strcmppgm2ram(buffer, "reset") == 0)
+			{
+				run = 0;
+			}
+			else if (strcmppgm2ram(buffer, "avancer") == 0)
+			{
+				command_avancer();
+			}
+			else if (strcmppgm2ram(buffer, "reculer") == 0)
+			{
+				command_reculer();
+			}
+			else if (strcmppgm2ram(buffer, "") == 0)
+			{
+			}
+			else if(strcmppgm2ram(buffer, "clear") == 0)
+			{
+				command_clear();
+			}
+			else
+			{
+				printf("%s: commande non reconnue" NL, buffer);
+			}
+		}
 	}
 }

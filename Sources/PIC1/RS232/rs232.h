@@ -3,6 +3,7 @@
 #define RS232_H
 
 #include <stdio.h> // define printf() & co
+#include "config.h"
 
 /** Raccourci (facultatif) pour écrire un retour à la ligne
  *
@@ -32,7 +33,17 @@ void rs232_clean(void);
  * Les données rendues ne contient pas le caractère de retour à la ligne
  *
  * @param buffer Le tampon dans lequel seront stockés les caractères lus
+ * @return renvoie TRUE si la lecture a été interrompue par une interruption,
+ * FALSE sinon
  */
-void rs232_read_line(char buffer[64]);
+BOOL rs232_read_line(char buffer[64]);
+
+/** Affiche @a length caractères d'effacement
+ */
+void rs232_clear_characters(int length);
+
+/** Interrompt la lecture des caractères (à appeler depuis le code de gestion des interruptions)
+ */
+void rs232_interrupt_reading(void);
 
 #endif

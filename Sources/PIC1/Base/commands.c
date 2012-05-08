@@ -43,12 +43,11 @@ void command_avancer(void)
 	rs232_read_line(buf);
 	n = atoi(buf);
 	
-	printf(NL);
-	printf("Numero du pic ");
+	printf("Numero du pic ? (1 ou 2) ");
 	rs232_read_line(buf);
 	pic = atoi(buf);
 	
-	if(pic==0)
+	if(pic==1)
 	{
 		if (avancement + n < 256 && avancement + n >= 0)
 			avancement += n;
@@ -57,7 +56,7 @@ void command_avancer(void)
 	
 		led_afficher_int(avancement);
 	}
-	else if(pic==1 && n>-1 && n<256)
+	else if(pic == 2 && n>-1 && n<256)
 	{
 		can_send(Avancer, n);
 	}

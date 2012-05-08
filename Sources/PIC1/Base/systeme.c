@@ -5,6 +5,7 @@
 #include "can.h"
 #include "led.h"
 #include "commands.h"
+#include "interruption.h"
 
 /* Fonction d'initialisation des paramètres pour les interruptions*/
 void init_interruption()
@@ -29,4 +30,5 @@ void init(void)
 	can_init();
 	commands_init();
 	led_init();
+	interruption_init();
 }
