@@ -76,12 +76,16 @@ void main()
 			{
 				command_reculer();
 			}
-			else if (strcmppgm2ram(buffer, "") == 0)
-			{
-			}
-			else if(strcmppgm2ram(buffer, "clear") == 0)
+			else if (strcmppgm2ram(buffer, "clear") == 0)
 			{
 				command_clear();
+			}
+			else if (strcmppgm2ram(buffer, "alert") == 0)
+			{
+				command_alert();
+			}	
+			else if (strcmppgm2ram(buffer, "") == 0)
+			{
 			}
 			else
 			{

@@ -24,4 +24,8 @@ void command_avancer(void);
  */
 void command_reculer(void);
 
+/** Affiche la séquence d'alerte
+ */
+void command_alert(void);
+
 #endif
