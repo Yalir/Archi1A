@@ -16,12 +16,12 @@ void commands_init(void)
 void command_help(void)
 {
 	printf("Commandes disponibles:" NL);
-	printf("alert - affiche la séquence d'alerte des LEDs" NL);
-	printf("avancer - permet d'avancer de N pas" NL);
-	printf("clear - Permet d'effacer l'écran" NL);
-	printf("help - afficher ce message d'aide" NL);
-	printf("reculer - permet de reculer de N pas" NL);
-	printf("reset - redémarrer le programme" NL);
+	printf("alert \t\t affiche la séquence d'alerte des LEDs" NL);
+	printf("avancer \t permet d'avancer de N pas" NL);
+	printf("clear \t\t Permet d'effacer l'écran" NL);
+	printf("help \t\t afficher ce message d'aide" NL);
+	printf("reculer \t permet de reculer de N pas" NL);
+	printf("reset \t\t redémarrer le programme" NL);
 	printf(NL);
 }
 
