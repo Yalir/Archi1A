@@ -87,3 +87,13 @@ void interruption_save_data(Interruption type, BYTE value)
 	has_interruption = TRUE;
 }	
 
+void interruption_mask_all(void)
+{
+	INTCONbits.GIE = 0;
+}	
+
+void interruption_unmask_all(void)
+{
+	INTCONbits.GIE = 1;
+}	
+

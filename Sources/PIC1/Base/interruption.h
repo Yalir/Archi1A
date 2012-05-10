@@ -32,5 +32,14 @@ int interruption_get_data(Interruption *type, BYTE *value);
  */
 void interruption_save_data(Interruption type, BYTE value);
 
+/** Met toutes les interruptions en attente jusqu'à ce que interruption_unmask_all() soit appelé.
+ */
+void interruption_mask_all(void);
+
+/** Permet de réactiver les interruptions précédemment mises en attente par interruption_mask_all()
+ */
+void interruption_unmask_all(void);
+
+
 #endif
 
