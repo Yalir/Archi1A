@@ -41,9 +41,9 @@ void main()
 			Interruption type;
 			BYTE value;
 			
-			rs232_clear_characters(writtenLen + 2);
 			interruption_get_data(&type, &value);
 			
+			printf("\r");
 			switch (type)
 			{
 				case Int_RB4ButtonPressed:
@@ -56,7 +56,7 @@ void main()
 					
 				default:
 					printf("Notification : interruption inconnue" NL);
-			}	
+			}
 		}
 		else
 		{

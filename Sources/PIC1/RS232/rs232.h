@@ -4,6 +4,7 @@
 
 #include <stdio.h> // define printf() & co
 #include "config.h"
+#include "interruption.h"
 
 /** Raccourci (facultatif) pour écrire un retour à la ligne
  *
@@ -12,6 +13,9 @@
  */
 #define NL "\r\n"
 
+/** Garantir qu'un affichage RS232 ne sera pas interrompu (et ne sera pas perturbé)
+ */
+#define printf(s) interruption_mask_all(); printf(s); interruption_unmask_all()
 
 /** Initialiser la communication RS232
  *
