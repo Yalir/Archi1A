@@ -20,3 +20,31 @@ void can_send(Command c, BYTE param)
 	while (!ECANSendMessage(0, data_envoi, 2, 0));
 }	
 
+
+CANResult can_receive(Command *c, BYTE *param)
+{
+	unsigned long id;
+	BYTE data_recu[8] = {0, 0, 0, 0, 0, 0, 0, 0};
+	BYTE dataLen;
+    ECAN_RX_MSG_FLAGS flags;
+	CANResult res = CAN_NoData;
+	
+	if (c != NULL && param != NULL)
+	{
+		BOOL didReceiveData = ECANReceiveMessage(&id, data_recu, &dataLen, &flags);
+		
+		if (didReceiveData)
+		{
+			// FIXME: peut etre verifier les bits de la variable 'flags'
+			*c = data_recu[0];
+			*param = data_recu[1];
+			res = CAN_DidReceiveData;
+		}
+	}
+	else
+	{
+		res = CAN_InvalidParameter;
+	}
+	
+	return res;
+}
