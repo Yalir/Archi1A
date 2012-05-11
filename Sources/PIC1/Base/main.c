@@ -29,13 +29,12 @@ void main()
 	printf(NL NL "Début du programme" NL);
 	printf("Bienvenue sur le terminal 1.0 de la carte PICDEM CAN-LIN 3" NL);
 	printf("Afin d'avoir un aperçu des commandes disponibles, utilisez la commande 'help'" NL NL);
-    
+    can_init();
 	while(run)
 	{
 		printf("> ");
 		interrupted = rs232_read_line(buffer);
 		writtenLen = strlen(buffer);
-		
 		if (interrupted == TRUE)
 		{
 			Interruption type;
@@ -43,7 +42,6 @@ void main()
 			
 			rs232_clear_characters(writtenLen + 2);
 			interruption_get_data(&type, &value);
-			
 			switch (type)
 			{
 				case Int_RB4ButtonPressed:
@@ -53,10 +51,18 @@ void main()
 				case Int_RB5ButtonPressed:
 					printf("Notification : le bouton RB5 a été enfoncé" NL);
 					break;
-					
+
+				case Int_RB4ButtonPressed2:
+					printf("Notification : le bouton RB4 du PIC2 a été enfoncé" NL);
+					break;
+				
+				case Int_RB5ButtonPressed2:
+					printf("Notification : le bouton RB5 du PIC2 a été enfoncé" NL);
+					break;
+				
 				default:
 					printf("Notification : interruption inconnue" NL);
-			}	
+			}
 		}
 		else
 		{

@@ -4,7 +4,7 @@
 
 #include <stdio.h> // define printf() & co
 #include "config.h"
-
+#include "../CAN/can.h"
 /** Raccourci (facultatif) pour écrire un retour à la ligne
  *
  * Exemple :

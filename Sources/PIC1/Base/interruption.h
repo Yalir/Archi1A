@@ -6,7 +6,9 @@
 
 typedef enum {
 	Int_RB4ButtonPressed,
-	Int_RB5ButtonPressed
+	Int_RB5ButtonPressed,
+	Int_RB4ButtonPressed2,
+	Int_RB5ButtonPressed2
 } Interruption;	
 
 /** Initialise le système d'enregistrement des interruptions

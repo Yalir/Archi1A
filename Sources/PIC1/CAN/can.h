@@ -20,4 +20,8 @@ void can_init(void);
  */
 void can_send(Command c, BYTE param);
 
+/*
+ * Reception de données via le CAN
+ */
+void can_recieve(void);
 #endif

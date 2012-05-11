@@ -15,7 +15,7 @@
 #define BIT7 (1 << 7)
 
 static int rs232_initialized = 0;
-static BOOL has_interruption = FALSE;
+BOOL has_interruption = FALSE;
 
 void rs232_init(void)
 {
@@ -69,7 +69,9 @@ BOOL rs232_read_line(char buffer[64])
 	// Lire le texte
 	do {
 		// Lire un caractère
-		while (!DataRdyUSART() && has_interruption == FALSE);
+		while (!DataRdyUSART() && has_interruption == FALSE)
+			can_recieve();
+				
 		
 		if (has_interruption == FALSE)
 		{
