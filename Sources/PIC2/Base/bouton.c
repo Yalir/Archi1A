@@ -12,6 +12,8 @@ static void bouton_check_init(void)
 		TRISBbits.RB4 = 1;
 		TRISBbits.RB5 = 1;
 		bouton_initialized = 1;
+		PORTBbits.RB4=0;
+		PORTBbits.RB5=0;
 	}	
 }	
 

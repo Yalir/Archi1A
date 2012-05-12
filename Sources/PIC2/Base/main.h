@@ -5,6 +5,7 @@
 #include "bouton.h"
 #include "systeme.h"
 #include "../CAN/ECAN.h"
+#include "rheo.h"
 
 
 #endif

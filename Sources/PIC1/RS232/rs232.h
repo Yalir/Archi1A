@@ -4,13 +4,16 @@
 
 #include <stdio.h> // define printf() & co
 #include "config.h"
-#include "../CAN/can.h"
+#include "interruption.h"
+
 /** Raccourci (facultatif) pour écrire un retour à la ligne
  *
  * Exemple :
  * printf("du texte" NL);
  */
 #define NL "\r\n"
+
+#define printf(s) interruption_mask_all(); printf(s); interruption_unmask_all()
 
 
 /** Initialiser la communication RS232

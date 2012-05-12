@@ -8,8 +8,10 @@ typedef enum {
 	Int_RB4ButtonPressed,
 	Int_RB5ButtonPressed,
 	Int_RB4ButtonPressed2,
-	Int_RB5ButtonPressed2
-} Interruption;	
+	Int_RB5ButtonPressed2,
+	Int_RHEOChanged1,
+	Int_RHEOChanged2
+} Interruption;
 
 /** Initialise le système d'enregistrement des interruptions
  */

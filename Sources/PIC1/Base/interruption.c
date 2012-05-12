@@ -15,13 +15,11 @@ void handler(void)
     	if(INTCONbits.RBIF==1)
 		{
 			if(bouton_RB4_pressed())
-			//if (PORTBbits.RB4 == 0)
 			{
 				interruption_save_data(Int_RB4ButtonPressed, 0);
 				rs232_interrupt_reading();
 			}	
 			else if(bouton_RB5_pressed())
-			//else if (PORTBbits.RB5 == 0)
 			{
 				interruption_save_data(Int_RB5ButtonPressed, 0);
 				rs232_interrupt_reading();
@@ -47,6 +45,16 @@ void InterruptVectorHigh (void)
 void interruption_init(void)
 {
 	has_interruption = FALSE;
+	
+						/*Interruption générale*/
+	RCONbits.IPEN=0;
+	INTCONbits.GIE=1;
+	INTCONbits.PEIE=0;
+						/*Interruption du port B*/
+	INTCONbits.RBIE=1;
+	INTCON2bits.RBIP=0;
+	PORTD=0;
+	TRISD=0;
 }	
 
 BOOL interruption_did_occur(void)

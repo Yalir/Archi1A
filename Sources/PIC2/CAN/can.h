@@ -33,8 +33,5 @@ void can_send(Command c, BYTE param);
  */
 int can_receive(Command *c, BYTE *param);
 
-/** Vérification périodique dans le cas de données émises par le PIC 2
- */
-void can_check_for_received_data(void);
 
 #endif

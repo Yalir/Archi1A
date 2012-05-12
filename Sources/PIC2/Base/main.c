@@ -1,7 +1,7 @@
 
 #include "config.h"
 #include "main.h"
-#include "../RS232/rs232.h"
+#include "can.h"
 
 #pragma config PWRT = OFF
 #pragma config BOR = ON
@@ -14,64 +14,74 @@
 static unsigned char avancement=0;
 void avancer(BYTE data)
 {
-	avancement=(avancement+data);
-	if(avancement>255)
-		avancement=avancement-255;
+    avancement += data;
 	led_afficher_int(avancement);
 }
+
+void reculer(BYTE data)
+{
+    avancement -= data;
+	led_afficher_int(avancement);
+}
+
+void degree(void)
+{
+	unsigned char rheo_val;
+	rheo_get_value(&rheo_val);
+	can_send(Degree, rheo_val);
+}	
+
+
 void main()
 {
-	unsigned long id;
 	BYTE cpt_RB4;
 	BYTE cpt_RB5;
-    BYTE data_envoi[2]={0,0};
-    BYTE data_recu[2]={0,0};
-    BYTE dataLen=2;
-    int i;
+    Command cmd;
+    BYTE param;
+    int run = 1;
 
-    ECAN_RX_MSG_FLAGS flags;
 	init();
-
+	
 	cpt_RB4 = 0;
 	cpt_RB5 = 0;
+	avancement = 0;
 
-	for (i = 0; i < 8;i++)
-		data_recu[i] = 0xFF;
-
-	ECANInitialize();
-    ECANSetBaudRate(2, 4, 8, 8, 8);
-
-	while(1)
+	while(run)
 	{
-		if(TRUE == ECANReceiveMessage(&id, data_recu, &dataLen, &flags))
+		if (1 == can_receive(&cmd, &param))
 		{
-			if(data_recu[0]==1)
+			switch (cmd)
 			{
-				avancer(data_recu[1]);
-			}
+				case Avancer:
+					avancer(param);
+					break;
+					
+				case Reculer:
+					reculer(param);
+					break;
+					
+				case Degree:
+					degree();
+					break;
+				
+				case Reset:
+					run = 0;
+					break;
+				default:
+					break;
+			}	
 		}
-
 
 		if(bouton_RB4_pressed())
 		{
-			cpt_RB4 = cpt_RB4 + 1;
-			data_envoi[0]=4;
-			data_envoi[1] = (BYTE)cpt_RB4;
-			led_on(4);
-			while (!ECANSendMessage(0, data_envoi, 2, 0));
-			PIC1_ONLY printf("compteur de RB4 : %u" NL, cpt_RB4);
-
+			cpt_RB4++;
+			can_send(BoutonRB4, cpt_RB4);
 		}
 
 		if(bouton_RB5_pressed())
 		{
-			cpt_RB5 = cpt_RB5 + 1;
-			data_envoi[0]=5;
-			data_envoi[1] = (BYTE)cpt_RB5;
-			led_on(5);
-			while (!ECANSendMessage(0, data_envoi, 2, 0));
-			PIC1_ONLY printf("compteur de RB5 : %u" NL, cpt_RB5);
-
+			cpt_RB5++;
+			can_send(BoutonRB5, cpt_RB5);
 		}
 	}
 }

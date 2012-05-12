@@ -1,7 +1,7 @@
 
 #include "rs232.h"
 #include "config.h"
-#include "led.h"
+#include "systeme.h"
 #include <usart.h>
 
 
@@ -15,7 +15,7 @@
 #define BIT7 (1 << 7)
 
 static int rs232_initialized = 0;
-BOOL has_interruption = FALSE;
+static BOOL has_interruption = FALSE;
 
 void rs232_init(void)
 {
@@ -70,7 +70,7 @@ BOOL rs232_read_line(char buffer[64])
 	do {
 		// Lire un caractère
 		while (!DataRdyUSART() && has_interruption == FALSE)
-			can_recieve();
+			system_perform_states_check();
 				
 		
 		if (has_interruption == FALSE)

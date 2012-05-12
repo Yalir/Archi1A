@@ -2,9 +2,7 @@
 #include "can.h"
 #include "config.h"
 #include "ECAN.h"
-#include "rs232.h"
 #include "bouton.h"
-#include "interruption.h"
 
 #pragma romdata
 void can_init(void)
@@ -52,39 +50,5 @@ int can_receive(Command *c, BYTE *param)
 	}
 
 	return res;
-}	
-
-/** Vérification périodique dans le cas de données émises par le PIC 2
- */
-void can_check_for_received_data(void)
-{
-	Command c;
-	BYTE param;
-	
-	int res = can_receive(&c, &param);
-	
-	if (res == 1)
-	{
-		switch (c)
-		{
-			case Degree:
-				interruption_save_data(Int_RHEOChanged2, param);
-        		rs232_interrupt_reading();
-        		break;
-        		
-        	case BoutonRB4:
-        		interruption_save_data(Int_RB4ButtonPressed2, 0);
-        		rs232_interrupt_reading();
-        		break;
-        		
-        	case BoutonRB5:
-        		interruption_save_data(Int_RB5ButtonPressed2, 0);
-        		rs232_interrupt_reading();
-        		break;
-        		
-        	default:
-        		break;
-		}	
-	}	
-}	
+}
 

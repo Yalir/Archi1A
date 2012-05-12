@@ -28,4 +28,9 @@ void command_reculer(void);
  */
 void command_alert(void);
 
+/*
+ * Affiche la valeur du potentiomètre cible
+ */
+void command_degree(void);
+
 #endif

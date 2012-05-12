@@ -1,5 +1,6 @@
+
 #include "systeme.h"
-#include "../RS232/rs232.h"
+#include "can.h"
 
 /* Fonction d'initialisation des paramètres pour les interruptions*/
 void init_interruption()
@@ -15,10 +16,24 @@ void init_interruption()
 	TRISD=0;
 }
 
+void init_rheo(void)
+{
+		// Make RA0/AN0 as analog pin, internal reference
+    ADCON1 = 0b00001110;
+
+    // A/D result would be right justified, auto acquisition of
+    // 4Tad, Fosc/32 clock
+    ADCON2 = 0b10010010;
+
+    // Select channel 1 and turn on the ADC Module.
+    ADCON0 = 0b00000001;
+}
+
 
 /* Fonction générale de configuration*/
 void init(void)
 {
-	init_interruption();
-	rs232_init();	
+	//init_interruption();
+	init_rheo();
+	can_init();	
 }

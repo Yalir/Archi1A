@@ -6,29 +6,25 @@
 #include "led.h"
 #include "commands.h"
 #include "interruption.h"
-
-/* Fonction d'initialisation des paramètres pour les interruptions*/
-void init_interruption()
-{
-						/*Interruption générale*/
-	RCONbits.IPEN=0;
-	INTCONbits.GIE=1;
-	INTCONbits.PEIE=0;
-						/*Interruption du port B*/
-	INTCONbits.RBIE=1;
-	INTCON2bits.RBIP=0;
-	PORTD=0;
-	TRISD=0;
-}
+#include "rheo.h"
 
 
 /* Fonction générale de configuration*/
-void init(void)
+void system_init(void)
 {
-	init_interruption();
 	rs232_init();
 	can_init();
 	commands_init();
 	led_init();
 	interruption_init();
+	rheo_init();
 }
+
+
+/** Fonction appelée par les appels bloquants pour permettre de vérifier
+ * des états normalement gérés par interruption
+ */
+void system_perform_states_check(void)
+{
+	can_check_for_received_data();
+}	

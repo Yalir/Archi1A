@@ -1,8 +1,14 @@
+
 #ifndef SYSTEME_H_INCLUDED
 #define SYSTEME_H_INCLUDED
-#include <p18f6680.h>
 
-void init(void);
-void init_interruption();
+/** Initialiser l'ensemble du système et des composants de la carte
+ */
+void system_init(void);
+
+/** Fonction appelée par les appels bloquants pour permettre de vérifier
+ * des états normalement gérés par interruption
+ */
+void system_perform_states_check(void);
 
 #endif
