@@ -134,7 +134,7 @@ void led_afficher_int(unsigned char valeur)
 	PORTDbits.RD4 = ((valeur & (1 << 4)) != 0) ? 1 : 0;
 	PORTDbits.RD5 = ((valeur & (1 << 5)) != 0) ? 1 : 0;
 	PORTDbits.RD6 = ((valeur & (1 << 6)) != 0) ? 1 : 0;
-	PORTDbits.RD7 = ((valeur & (1 << 6)) != 0) ? 1 : 0;
+	PORTDbits.RD7 = ((valeur & (1 << 7)) != 0) ? 1 : 0;
 }
 
 void led_alert(void)
