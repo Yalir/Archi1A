@@ -70,7 +70,7 @@ void main()
 					*/
 					
 				case Int_RHEOChanged2:
-					printf("La valeur du potentiomètre du PIC 2 est %d" NL, value);
+					printf("La valeur du potentiomètre du PIC 2 est %d" NL, value * 5);
 					break;
 					
                	default:

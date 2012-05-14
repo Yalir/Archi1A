@@ -6,6 +6,6 @@
 
 void rheo_init(void);
 
-void rheo_get_value(unsigned char * val);
+void rheo_get_value(unsigned int * val);
 
 #endif // RHEO_H_INCLUDED

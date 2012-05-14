@@ -15,9 +15,11 @@ void rheo_init(void)
 
     // Select channel 1 and turn on the ADC Module.
     ADCON0 = 0b00000001;
+    //TRISA=0;
+    //PORTA=0;
 }
 
-void rheo_get_value(unsigned char * val)
+void rheo_get_value(unsigned int * val)
 {
 	  // Start the conversion
         ADCON0bits.GO = 1;
@@ -26,5 +28,5 @@ void rheo_get_value(unsigned char * val)
         while( ADCON0bits.GO );
 
         // Display the result.
-        *val = ADRESL;
+        *val = ADRES;
 }

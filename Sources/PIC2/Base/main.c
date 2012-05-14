@@ -26,9 +26,9 @@ void reculer(BYTE data)
 
 void degree(void)
 {
-	unsigned char rheo_val;
+	unsigned int rheo_val;
 	rheo_get_value(&rheo_val);
-	can_send(Degree, rheo_val);
+	can_send(Degree, rheo_val / 5);
 }	
 
 

@@ -121,7 +121,7 @@ void command_degree(void)
 {
 	char buf[64];
 	int pic;
-	unsigned char rheo_val;
+	unsigned int rheo_val;
 	
 	printf("Numero du pic ? (1 ou 2) ");
 	rs232_read_line(buf);
